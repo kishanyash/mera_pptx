@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     output_root: Path = Field(default=Path("output"))
     schema_version: str = "1.0.0"
     default_currency: str = "INR"
+    theme_path: Path | None = Field(default=None)
     anthropic_api_key: str | None = None
     model_name: str = "claude-3-7-sonnet-latest"
     min_slide_count: int = 5

@@ -21,6 +21,9 @@ class LayoutDefinition(BaseModel):
     allowed_block_types: set[NonEmptyString]
     required_blocks: list[BlockRequirement] = Field(default_factory=list)
     placeholders: list[PlaceholderGeometry] = Field(default_factory=list)
+    has_header: bool = True
+    has_footer: bool = True
+    has_rating_badge: bool = False
     notes: str | None = None
 
 
@@ -28,18 +31,25 @@ def _ph(name: str, left: float, top: float, width: float, height: float) -> Plac
     return PlaceholderGeometry(name=name, box=Box(left=left, top=top, width=width, height=height))
 
 
+# All layouts use widescreen 13.333" x 7.5" geometry.
+# Content area: left=0.65, right=0.65, top=1.15 (below header+divider), bottom=6.85 (above footer).
+# Usable content width: ~12.0"  |  Usable content height: ~5.7"
+
 LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
     "cover_slide": LayoutDefinition(
         layout="cover_slide",
         display_name="Cover Slide",
         allowed_block_types={"text", "metrics"},
         required_blocks=[BlockRequirement(block_type="metrics", min_count=1, max_count=1)],
+        has_header=False,
+        has_footer=False,
+        has_rating_badge=True,
         placeholders=[
-            _ph("title", 0.7, 0.8, 8.6, 0.8),
-            _ph("subtitle", 0.7, 1.7, 7.8, 0.5),
-            _ph("metrics", 0.7, 5.5, 8.0, 1.2),
+            _ph("title", 0.8, 1.5, 10.0, 1.2),
+            _ph("subtitle", 0.8, 2.9, 9.0, 0.6),
+            _ph("metrics", 0.8, 5.0, 10.0, 1.4),
         ],
-        notes="Used for report title, recommendation, and headline metrics.",
+        notes="Hero cover: dark background, large title, rating badge, and headline metrics.",
     ),
     "investment_thesis": LayoutDefinition(
         layout="investment_thesis",
@@ -49,10 +59,11 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
             BlockRequirement(block_type="text", min_count=1, max_count=1),
             BlockRequirement(block_type="bullets", min_count=1, max_count=1),
         ],
+        has_rating_badge=True,
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("text", 0.7, 1.3, 3.8, 4.5),
-            _ph("bullets", 5.0, 1.3, 4.0, 4.8),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("text", 0.7, 1.2, 5.5, 5.2),
+            _ph("bullets", 6.6, 1.2, 5.7, 5.2),
         ],
     ),
     "company_snapshot": LayoutDefinition(
@@ -63,10 +74,11 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
             BlockRequirement(block_type="text", min_count=1, max_count=1),
             BlockRequirement(block_type="metrics", min_count=1, max_count=1),
         ],
+        has_rating_badge=True,
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("text", 0.7, 1.4, 4.5, 3.8),
-            _ph("metrics", 5.5, 1.4, 3.4, 3.0),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("text", 0.7, 1.2, 6.0, 4.0),
+            _ph("metrics", 7.2, 1.2, 5.4, 3.5),
         ],
     ),
     "text_plus_bullets": LayoutDefinition(
@@ -78,9 +90,9 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
             BlockRequirement(block_type="bullets", min_count=1, max_count=1),
         ],
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("text", 0.7, 1.4, 4.0, 4.5),
-            _ph("bullets", 5.0, 1.4, 4.0, 4.5),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("text", 0.7, 1.2, 5.5, 5.2),
+            _ph("bullets", 6.6, 1.2, 5.7, 5.2),
         ],
     ),
     "text_plus_chart": LayoutDefinition(
@@ -92,9 +104,9 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
             BlockRequirement(block_type="chart", min_count=1, max_count=1),
         ],
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("text", 0.7, 1.4, 3.3, 4.6),
-            _ph("chart", 4.3, 1.2, 4.7, 4.8),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("text", 0.7, 1.2, 4.5, 5.2),
+            _ph("chart", 5.6, 1.1, 6.7, 5.4),
         ],
     ),
     "full_width_chart": LayoutDefinition(
@@ -103,8 +115,8 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
         allowed_block_types={"chart"},
         required_blocks=[BlockRequirement(block_type="chart", min_count=1, max_count=1)],
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("chart", 0.7, 1.4, 8.3, 4.9),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("chart", 0.7, 1.2, 11.8, 5.3),
         ],
     ),
     "full_table": LayoutDefinition(
@@ -113,8 +125,8 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
         allowed_block_types={"table"},
         required_blocks=[BlockRequirement(block_type="table", min_count=1, max_count=1)],
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("table", 0.7, 1.3, 8.3, 5.1),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("table", 0.65, 1.2, 12.0, 5.3),
         ],
     ),
     "valuation_summary": LayoutDefinition(
@@ -126,10 +138,10 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
             BlockRequirement(block_type="metrics", min_count=1, max_count=1),
         ],
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("text", 0.7, 1.3, 3.4, 1.7),
-            _ph("metrics", 4.4, 1.2, 4.6, 1.8),
-            _ph("table", 0.7, 3.2, 8.3, 3.2),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("text", 0.7, 1.2, 5.0, 2.0),
+            _ph("metrics", 6.2, 1.2, 6.2, 2.0),
+            _ph("table", 0.65, 3.5, 12.0, 3.0),
         ],
     ),
     "risks_and_catalysts": LayoutDefinition(
@@ -138,8 +150,8 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
         allowed_block_types={"bullets", "text"},
         required_blocks=[BlockRequirement(block_type="bullets", min_count=1, max_count=1)],
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("bullets", 0.8, 1.4, 8.0, 4.8),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("bullets", 0.7, 1.2, 11.5, 5.3),
         ],
     ),
     "disclaimer": LayoutDefinition(
@@ -148,8 +160,8 @@ LAYOUT_REGISTRY: dict[SlideLayout, LayoutDefinition] = {
         allowed_block_types={"text"},
         required_blocks=[BlockRequirement(block_type="text", min_count=1, max_count=1)],
         placeholders=[
-            _ph("title", 0.6, 0.5, 8.5, 0.6),
-            _ph("text", 0.8, 1.4, 8.0, 4.9),
+            _ph("title", 0.65, 0.55, 9.0, 0.55),
+            _ph("text", 0.7, 1.2, 11.5, 5.3),
         ],
     ),
 }

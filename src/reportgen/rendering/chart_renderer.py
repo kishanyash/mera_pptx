@@ -22,7 +22,7 @@ def _build_chart_image(block: ChartBlock, resolver: RenderDataResolver, theme: B
     fig.patch.set_facecolor(theme.palette.background)
     ax.set_facecolor(theme.palette.background)
 
-    colors = [theme.palette.primary, theme.palette.secondary, theme.palette.accent]
+    colors = theme.chart_palette if theme.chart_palette else [theme.palette.primary, theme.palette.secondary, theme.palette.accent]
 
     if block.chart_type == "bar":
         width = 0.8 / max(len(series_data), 1)

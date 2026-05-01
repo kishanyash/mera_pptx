@@ -1,0 +1,116 @@
+{
+  "name": "tikona_research",
+  "palette": {
+    "primary": "#0B2545",
+    "secondary": "#13497B",
+    "accent": "#D4A843",
+    "text": "#1A1F27",
+    "muted_text": "#6B7A8D",
+    "background": "#F8F6F2",
+    "white": "#FFFFFF",
+    "positive": "#1A8754",
+    "negative": "#C0392B",
+    "neutral": "#6B7A8D",
+    "header_band": "#0B2545",
+    "footer_band": "#E8E4DC"
+  },
+  "chart_palette": [
+    "#0B2545",
+    "#13497B",
+    "#D4A843",
+    "#1A8754",
+    "#C0392B",
+    "#6B7A8D",
+    "#2E86AB",
+    "#A23B72"
+  ],
+  "rating_colors": {
+    "BUY": "#1A8754",
+    "HOLD": "#D4A843",
+    "SELL": "#C0392B",
+    "REDUCE": "#E67E22"
+  },
+  "title_font": {
+    "family": "Aptos Display",
+    "size_pt": 24,
+    "bold": true,
+    "color_hex": "#0B2545"
+  },
+  "subtitle_font": {
+    "family": "Aptos",
+    "size_pt": 13,
+    "bold": false,
+    "color_hex": "#6B7A8D"
+  },
+  "body_font": {
+    "family": "Aptos",
+    "size_pt": 11,
+    "bold": false,
+    "color_hex": "#1A1F27"
+  },
+  "metric_font": {
+    "family": "Aptos",
+    "size_pt": 14,
+    "bold": true,
+    "color_hex": "#0B2545"
+  },
+  "metric_label_font": {
+    "family": "Aptos",
+    "size_pt": 9,
+    "bold": false,
+    "color_hex": "#6B7A8D"
+  },
+  "metric_value_font": {
+    "family": "Aptos",
+    "size_pt": 18,
+    "bold": true,
+    "color_hex": "#0B2545"
+  },
+  "header_font": {
+    "family": "Aptos",
+    "size_pt": 8,
+    "bold": false,
+    "color_hex": "#FFFFFF"
+  },
+  "footer_font": {
+    "family": "Aptos",
+    "size_pt": 7,
+    "bold": false,
+    "color_hex": "#6B7A8D"
+  },
+  "rating_badge_font": {
+    "family": "Aptos Display",
+    "size_pt": 16,
+    "bold": true,
+    "color_hex": "#FFFFFF"
+  },
+  "cover": {
+    "title_font": {
+      "family": "Aptos Display",
+      "size_pt": 32,
+      "bold": true,
+      "color_hex": "#FFFFFF"
+    },
+    "subtitle_font": {
+      "family": "Aptos",
+      "size_pt": 16,
+      "bold": false,
+      "color_hex": "#D4A843"
+    },
+    "accent_bar_color": "#D4A843",
+    "background_color": "#0B2545"
+  },
+  "slide_geometry": {
+    "width_inches": 13.333,
+    "height_inches": 7.5,
+    "header_height_inches": 0.45,
+    "footer_height_inches": 0.35,
+    "content_margin_left": 0.65,
+    "content_margin_right": 0.65,
+    "content_top": 1.15,
+    "content_bottom": 6.85,
+    "divider_line_top": 0.95
+  },
+  "firm_name": "Tikona Research",
+  "logo_path": null
+}
